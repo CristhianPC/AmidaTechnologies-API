@@ -15,6 +15,9 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compile('org.apache.commons:commons-lang3:3.9',
+			'org.apache.commons:commons-collections4:4.4', 
+			'org.projectlombok:lombok:1.18.10')
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
