@@ -13,11 +13,19 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+	//implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compile('org.apache.commons:commons-lang3:3.9',
 			'org.apache.commons:commons-collections4:4.4', 
-			'org.projectlombok:lombok:1.18.10')
+			'org.projectlombok:lombok:1.18.10',
+			'org.json:json:20200518',
+			'com.google.code.gson:gson:2.7'
+			)
+	//implementation("com.fasterxml.jackson.core:jackson-databind:2.11.0"){ 
+		//exclude group: 'org.apache.calcite', module: 'jcalcite-core'
+	    //exclude group: 'org.apache.calcite', module: 'calcite-avatica'
+	 //   exclude group: 'com.fasterxml.jackson', module: "datatype.jsr310"
+	//}
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
