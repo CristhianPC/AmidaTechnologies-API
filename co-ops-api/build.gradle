@@ -21,11 +21,6 @@ dependencies {
 			'org.json:json:20200518',
 			'com.google.code.gson:gson:2.7'
 			)
-	//implementation("com.fasterxml.jackson.core:jackson-databind:2.11.0"){ 
-		//exclude group: 'org.apache.calcite', module: 'jcalcite-core'
-	    //exclude group: 'org.apache.calcite', module: 'calcite-avatica'
-	 //   exclude group: 'com.fasterxml.jackson', module: "datatype.jsr310"
-	//}
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
