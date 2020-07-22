@@ -15,6 +15,10 @@ import amida.cristhian.coopsapi.model.request.CoopsapiScopeRequest;
 import amida.cristhian.coopsapi.model.response.CoopsapiResponse;
 import amida.cristhian.coopsapi.service.ICoopsapiService;
 
+/**
+ * @author Cristhian
+ *
+ */
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/amida")

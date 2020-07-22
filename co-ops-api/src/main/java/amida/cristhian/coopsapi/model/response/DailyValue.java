@@ -1,5 +1,9 @@
 package amida.cristhian.coopsapi.model.response;
 
+/**
+ * @author Cristhian
+ *
+ */
 public class DailyValue {
 	private String t;
 	private String v;

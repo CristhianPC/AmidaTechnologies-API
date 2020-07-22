@@ -1,6 +1,7 @@
 package amida.cristhian.coopsapi.service.impl;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,6 +25,10 @@ import amida.cristhian.coopsapi.model.response.CoopsapiResponse;
 import amida.cristhian.coopsapi.model.response.DailyValue;
 import amida.cristhian.coopsapi.service.ICoopsapiService;
 
+/**
+ * @author Cristhian
+ *
+ */
 @Service
 public class CoopsapiServiceImpl implements ICoopsapiService {
 
@@ -44,30 +49,54 @@ public class CoopsapiServiceImpl implements ICoopsapiService {
 	}
 
 	private CoopsapiResponse GetInformation(String originalDate, String oldDate, String baseUrl, String station,
-			String product) {
+			String product) throws Exception {
 
 		CoopsapiResponse coopsapiResponse = new CoopsapiResponse();
 
-		ArrayList<DailyValue> cureentData = GetDataFromApi(baseUrl, originalDate, station, product);
+		ArrayList<DailyValue> currentData = GetDataFromApi(baseUrl, originalDate, station, product);
 		ArrayList<DailyValue> previousData = GetDataFromApi(baseUrl, oldDate, station, product);
 
+		ArrayList<DailyValue> dailyVList = new ArrayList<DailyValue>();
+		Double aveDailyValue = 0.00;
+		Integer count = 0;
+		Integer dateCoopsapi;
+		Integer check = 1;
+		for (final DailyValue cuData : currentData) {
+
+			dateCoopsapi = Integer.parseInt(cuData.getT().substring(8, 10));
+			if (dateCoopsapi != check) {
+
+				aveDailyValue = aveDailyValue / count;
+				DailyValue dvvv = new DailyValue();
+				dvvv.setV(String.valueOf(aveDailyValue));
+				dvvv.setT(cuData.getT().substring(0, 8) + String.valueOf(check));
+				dailyVList.add(dvvv);
+				check = dateCoopsapi;
+				aveDailyValue = 0.00;
+				count = 0;
+			}
+			aveDailyValue += cuData.getV().isEmpty() ? 0.00 : Double.parseDouble(cuData.getV());
+			count++;
+		}
+		coopsapiResponse.setDailyAvgMonth(dailyVList);
+
 		coopsapiResponse
-				.setMaxValueMonth(cureentData.stream().max(Comparator.comparing(DailyValue::getV)).get().getV());
-		String minMonthValue = cureentData.stream().min(Comparator.comparing(DailyValue::getV)).get().getV();
+				.setMaxValueMonth(currentData.stream().max(Comparator.comparing(DailyValue::getV)).get().getV());
+		String minMonthValue = currentData.stream().min(Comparator.comparing(DailyValue::getV)).get().getV();
 		coopsapiResponse.setMinValueMonth(minMonthValue = minMonthValue.isEmpty() ? "0" : minMonthValue);
 
 		Double aveMonthValue = 0.00;
-		for (DailyValue sValue : cureentData)
+		for (final DailyValue sValue : currentData)
 			aveMonthValue += sValue.getV().isEmpty() ? 0.00 : Double.parseDouble(sValue.getV());
-		coopsapiResponse.setAverageValueMonth(String.valueOf(aveMonthValue / cureentData.size()));
+		coopsapiResponse.setAverageValueMonth(String.valueOf(aveMonthValue / currentData.size()));
 
 		coopsapiResponse
 				.setMaxValuePrevMonth(previousData.stream().max(Comparator.comparing(DailyValue::getV)).get().getV());
 		String minPrevMonthValue = previousData.stream().min(Comparator.comparing(DailyValue::getV)).get().getV();
-		coopsapiResponse.setMinValuePrevMonth(minPrevMonthValue = minMonthValue.isEmpty() ? "0" : minMonthValue);
+		coopsapiResponse.setMinValuePrevMonth(minPrevMonthValue = minMonthValue.isEmpty() ? "0" : minPrevMonthValue);
 
 		Double avePrevMonthValue = 0.00;
-		for (DailyValue sValue : previousData)
+		for (final DailyValue sValue : previousData)
 			avePrevMonthValue += sValue.getV().isEmpty() ? 0.00 : Double.parseDouble(sValue.getV());
 		coopsapiResponse.setAverageValuePrevMonth(String.valueOf(avePrevMonthValue / previousData.size()));
 

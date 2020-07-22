@@ -1,5 +1,9 @@
 package amida.cristhian.coopsapi.model.request;
 
+/**
+ * @author Cristhian
+ *
+ */
 public class CoopsapiScopeRequest {
 	
 	private String station;

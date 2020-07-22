@@ -2,6 +2,10 @@ package amida.cristhian.coopsapi.model.response;
 
 import java.util.ArrayList;
 
+/**
+ * @author Cristhian
+ *
+ */
 public class CoopsapiResponse {
 
 	private ArrayList<DailyValue> dailyAvgMonth;

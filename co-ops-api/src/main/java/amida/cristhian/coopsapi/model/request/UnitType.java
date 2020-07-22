@@ -1,5 +1,9 @@
 package amida.cristhian.coopsapi.model.request;
 
+/**
+ * @author Cristhian
+ *
+ */
 public enum UnitType {
 	metric(1), english(2);
 
