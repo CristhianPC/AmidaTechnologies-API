@@ -19,7 +19,7 @@ import amida.cristhian.coopsapi.service.ICoopsapiService;
  * @author Cristhian
  *
  */
-@CrossOrigin
+
 @RestController
 @RequestMapping(value = "/amida")
 public class CoopsapiController {
@@ -28,12 +28,13 @@ public class CoopsapiController {
 
 	@Autowired
 	ICoopsapiService coopsapiService;
-
+		
 	@RequestMapping(value = "/home")
 	public String methodTest() {
 		return "testDone";
 	}
-
+	
+	@CrossOrigin(origins = "http://localhost:8083")
 	@PostMapping(value = "/monthlyReport")
 	public ResponseEntity<?> getResults(@RequestBody CoopsapiScopeRequest coopsapiRequest) throws Exception {
 		CoopsapiResponse result = coopsapiService.findCoopsapiInformation(coopsapiRequest);
